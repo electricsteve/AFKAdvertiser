@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "afkadvertiser",
+  "version": "${version}",
+  "name": "AFK Advertiser",
+  "description": "",
+  "authors": [
+    "ElectricSteve"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "icon": "icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "electricsteve.afkadvertiser.client.AFKAdvertiserClient"
+    ],
+    "main": [
+      "electricsteve.afkadvertiser.AFKAdvertiser"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  },
+  "mixins": [
+    "afkadvertiser.mixins.json"
+  ]
+}
