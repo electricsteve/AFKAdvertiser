@@ -1,5 +1,6 @@
 # AFKAdvertiser
 ![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.modrinth.com%2Fv2%2Fproject%2FsMCVKnbd&query=%24.downloads&style=flat&logo=modrinth&label=Downloads&labelColor=black&color=yellow)
+
 AFKAdvertiser is a Minecraft mod which sends a random chat message from a list on an interval.
 ## Dependencies
 The mod depends on [Fabric-Api](https://modrinth.com/mod/fabric-api).
