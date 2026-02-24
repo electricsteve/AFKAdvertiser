@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -17,20 +18,13 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 public class AdvertiserManager {
-    private final Path textsPath = FabricLoader.getInstance().getConfigDir().resolve("afkadvertiser.txt");
     private String[] texts;
-    public ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+    public final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     private boolean Enabled = false;
-    private final Runnable task = new Runnable() {
-        @Override
-        public void run() {
-            if (!Enabled) return;
-            sendRandomMessage();
-        }
-    };
 
     public AdvertiserManager() {
         int delay = 60;
+        Path textsPath = FabricLoader.getInstance().getConfigDir().resolve("afkadvertiser.txt");
         File textsFile = textsPath.toFile();
         try {
             if (textsFile.createNewFile()) {
@@ -42,7 +36,7 @@ public class AdvertiserManager {
                 AFKAdvertiserClient.LOGGER.warn("No config file found, created new one.");
             }
         } catch (IOException e) {
-            AFKAdvertiserClient.LOGGER.error("Couldn't create config file. Error: " + e);
+            AFKAdvertiserClient.LOGGER.error("Couldn't create config file. Error: {}", String.valueOf(e));
         }
         try {
             Stream<String> stream = Files.lines(textsPath);
@@ -50,29 +44,33 @@ public class AdvertiserManager {
             try {
                 delay = Integer.parseInt(array[0]);
             } catch (NumberFormatException e) {
-                AFKAdvertiserClient.LOGGER.error("Invalid delay in txt file. Error: " + e);
+                AFKAdvertiserClient.LOGGER.error("Invalid delay in txt file. Error: {}", String.valueOf(e));
             }
             this.texts = ArrayUtils.remove(array, 0);
             stream.close();
         } catch (IOException e) {
-            AFKAdvertiserClient.LOGGER.error("Texts File could not be read. Error: " + e);
+            AFKAdvertiserClient.LOGGER.error("Texts File could not be read. Error: {}", String.valueOf(e));
         }
+        Runnable task = () -> {
+            if (!Enabled) return;
+            sendRandomMessage();
+        };
         executor.scheduleAtFixedRate(task, 0, delay, TimeUnit.SECONDS);
     }
 
     public void sendRandomMessage() {
         try {
             int index = new Random().nextInt(texts.length);
-            MinecraftClient.getInstance().getNetworkHandler().sendChatMessage(texts[index]);
+            Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler()).sendChatMessage(texts[index]);
         } catch (Exception e) {
-            AFKAdvertiserClient.LOGGER.error("Error sending message. Error: " + e);
+            AFKAdvertiserClient.LOGGER.error("Error sending message. Error: {}", String.valueOf(e));
         }
     }
 
     public void setEnabled(boolean enabled) {
         this.Enabled = enabled;
         String message = enabled ? "Enabled" : "Disabled";
-        AFKAdvertiserClient.LOGGER.info(message + " AFK Advertiser");
+        AFKAdvertiserClient.LOGGER.info("{} AFK Advertiser", message);
     }
 
     public void toggleEnabled() {

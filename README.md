@@ -14,6 +14,6 @@ Second Line
 The first line is the interval in seconds between messages, all the following lines are the messages which are randomly selected, there can be an infinite number of messages (well, actually 2,147,483,647).
 When in-game, toggle it with /afkadvertiser.
 ## Issues
-If you have issues or found a bug, create an issue on github.
+If you have issues or found a bug, create an issue on GitHub.
 ## Contributing
-If you want a feature to be added or want to add something yourself, please first open a feature request on github.
+If you want a feature to be added or want to add something yourself, please first open a feature request on GitHub.
