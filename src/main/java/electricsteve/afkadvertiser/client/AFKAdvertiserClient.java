@@ -4,6 +4,8 @@ import electricsteve.afkadvertiser.AdvertiserManager;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
+import net.minecraft.text.Text;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +18,8 @@ public class AFKAdvertiserClient implements ClientModInitializer {
         adManager = new AdvertiserManager();
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(ClientCommandManager.literal("afkadvertiser")
                 .executes(context -> {
-                    adManager.toggleEnabled();
+                    boolean new_value = adManager.toggleEnabled();
+                    context.getSource().sendFeedback(Text.of("AFK Advertiser " + (new_value ? "enabled" : "disabled") + "."));
                     return 1;
                 })));
     }

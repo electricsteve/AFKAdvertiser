@@ -73,7 +73,8 @@ public class AdvertiserManager {
         AFKAdvertiserClient.LOGGER.info("{} AFK Advertiser", message);
     }
 
-    public void toggleEnabled() {
+    public boolean toggleEnabled() {
         setEnabled(!Enabled);
+        return this.Enabled;
     }
 }
