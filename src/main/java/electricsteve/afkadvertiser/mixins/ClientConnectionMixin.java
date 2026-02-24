@@ -1,14 +1,14 @@
 package electricsteve.afkadvertiser.mixins;
 
-import electricsteve.afkadvertiser.AFKAdvertiser;
-import electricsteve.afkadvertiser.AdvertiserManager;
-import electricsteve.afkadvertiser.client.AFKAdvertiserClient;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.text.Text;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import electricsteve.afkadvertiser.client.AFKAdvertiserClient;
 
 @Mixin(ClientConnection.class)
 public class ClientConnectionMixin {
