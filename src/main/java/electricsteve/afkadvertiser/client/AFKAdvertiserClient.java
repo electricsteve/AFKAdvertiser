@@ -1,6 +1,5 @@
 package electricsteve.afkadvertiser.client;
 
-import electricsteve.afkadvertiser.AdvertiserManager;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
@@ -8,6 +7,8 @@ import net.minecraft.text.Text;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import electricsteve.afkadvertiser.AdvertiserManager;
 
 public class AFKAdvertiserClient implements ClientModInitializer {
     public static final String MOD_ID = "AFKAdvertiser";
@@ -22,5 +23,6 @@ public class AFKAdvertiserClient implements ClientModInitializer {
                     context.getSource().sendFeedback(Text.of("AFK Advertiser " + (new_value ? "enabled" : "disabled") + "."));
                     return 1;
                 })));
+
     }
 }

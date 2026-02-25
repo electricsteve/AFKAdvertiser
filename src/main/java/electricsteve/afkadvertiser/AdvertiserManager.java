@@ -25,7 +25,21 @@ public class AdvertiserManager {
             return;
         }
         Runnable task = () -> {
+            AFKAdvertiserClient.LOGGER.debug("Task called");
             if (!Enabled) return;
+            int configRandomOffset = this.config.getRandomOffset();
+            if (configRandomOffset != 0) {
+                AFKAdvertiserClient.LOGGER.debug("Random offset enabled");
+                float wait_time = new Random().nextFloat(configRandomOffset);
+                AFKAdvertiserClient.LOGGER.debug("Wait time: {}", wait_time);
+                try {
+                    Thread.sleep((long) (wait_time * 1000));
+                } catch (InterruptedException e) {
+                    AFKAdvertiserClient.LOGGER.error("Sleep interrupted while waiting for config to be loaded");
+                    throw new RuntimeException(e);
+                }
+            }
+            AFKAdvertiserClient.LOGGER.debug("Actually sending message");
             sendRandomMessage();
         };
         executor.scheduleWithFixedDelay(task, 0, this.config.getInterval(), TimeUnit.SECONDS);
